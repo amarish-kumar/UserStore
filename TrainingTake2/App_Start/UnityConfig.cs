@@ -12,15 +12,13 @@ namespace TrainingTake2.App_Start
     /// </summary>
     public class UnityConfig
     {
-      
+
         public static UnityContainer RegisterTypes()
         {
             var container = new UnityContainer();
-            
-            container.RegisterType<IAuthRepository, AuthRepository>(new HierarchicalLifetimeManager());
+
+            container.RegisterType<IAuthRepository, AuthRepository>();
             return container;
-            
-            //DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }
 }

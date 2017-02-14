@@ -1,4 +1,6 @@
-﻿using System.Web.Http;
+﻿using System.Linq;
+using System.Web.Http;
+using Training.Identity;
 using Training.Identity.Services;
 
 namespace TrainingTake2.Controllers
@@ -12,17 +14,18 @@ namespace TrainingTake2.Controllers
             _repository = repository;
         }
 
-        //[Route("api/start/get")]
+        [Authorize]
         public string Get()
         {
-            _repository.Find("vova", "123");
-
-            return "hello world";
+            return _repository.GetAll().Count().ToString();
         }
 
-        //public IEnumerable<string> Get()
-        //{
-
-        //}
+        public void Post()
+        {
+            _repository.Add(new ApplicationUser
+            {
+                UserName = "andrey"
+            });
+        }
     }
 }

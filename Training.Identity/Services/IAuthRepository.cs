@@ -1,7 +1,17 @@
-﻿namespace Training.Identity.Services
+﻿using System.Linq;
+
+namespace Training.Identity.Services
 {
     public interface IAuthRepository
     {
-        ApplicationUser Find(string userName, string password);
+        IQueryable<ApplicationUser> GetAll();
+
+        ApplicationUser Add(ApplicationUser entity);
+
+        void Delete(ApplicationUser entity);
+
+        void Edit(ApplicationUser entity);
+
+        void Save();
     }
 }

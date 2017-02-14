@@ -1,18 +1,45 @@
-﻿namespace Training.Identity.Services
+﻿using System;
+using System.Linq;
+
+namespace Training.Identity.Services
 {
-    public class AuthRepository : IAuthRepository
+    public class AuthRepository : IAuthRepository, IDisposable
     {
         private readonly IdentityContext _context;
 
-        public AuthRepository()
+        public AuthRepository(IdentityContext context)
         {
-            _context = new IdentityContext();
+            _context = context;
         }
 
-        public ApplicationUser Find(string userName, string password)
+        public IQueryable<ApplicationUser> GetAll()
         {
-            var user = _context.Users.Find(userName, password);
-            return user;
+            return _context.Users;
+        }
+
+        public ApplicationUser Add(ApplicationUser entity)
+        {
+            return _context.Users.Add(entity);
+        }
+
+        public void Delete(ApplicationUser entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Edit(ApplicationUser entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Save()
+        {
+            _context.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            _context?.Dispose();
         }
     }
 }
