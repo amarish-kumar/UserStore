@@ -1,6 +1,9 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
+using Training.Identity;
 using Training.Identity.Services;
+using TrainingTake2.Models;
 
 namespace Training.API.Controllers
 {
@@ -19,9 +22,36 @@ namespace Training.API.Controllers
             return _repository.GetAll().Count().ToString();
         }
 
-        public void Post()
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("Create")]
+        public async Task<IHttpActionResult> POSTCreate(UserModel user)
         {
-            //todo: add user
+            if (!ModelState.IsValid)
+                return BadRequest("wrong user details");
+
+            if (_repository.IsEmailUnique(user.Email))
+                return BadRequest("email already taken");
+
+
+            var x = _repository.Add(new ApplicationUser
+            {
+                UserName = user.UserName,
+                Email = user.Email,
+                PasswordHash = user.Password.GetHashCode().ToString()
+            });
+
+            _repository.Save();
+            _repository.SetRole(x.Id, Roles.user);
+            _repository.Save();
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("CheckEmail/{email}")]
+        public bool CheckEmail(string email)
+        {
+            return _repository.IsEmailUnique(email);
         }
     }
 }
