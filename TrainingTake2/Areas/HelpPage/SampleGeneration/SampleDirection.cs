@@ -1,4 +1,4 @@
-namespace TrainingTake2.Areas.HelpPage
+namespace Training.API.Areas.HelpPage
 {
     /// <summary>
     /// Indicates whether the sample is used for request or response

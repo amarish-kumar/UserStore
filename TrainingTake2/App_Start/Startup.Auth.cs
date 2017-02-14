@@ -3,11 +3,11 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
 using Microsoft.Practices.Unity;
 using Owin;
+using Training.API.App_Start;
+using Training.API.Providers;
 using Training.Identity.Services;
-using TrainingTake2.App_Start;
-using TrainingTake2.Providers;
 
-namespace TrainingTake2
+namespace Training.API
 {
     public partial class Startup
     {

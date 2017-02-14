@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace TrainingTake2.Areas.HelpPage.ModelDescriptions
+namespace Training.API.Areas.HelpPage.ModelDescriptions
 {
     public interface IModelDocumentationProvider
     {

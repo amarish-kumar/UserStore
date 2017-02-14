@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net.Http.Headers;
 using System.Web.Http.Description;
-using TrainingTake2.Areas.HelpPage.ModelDescriptions;
+using Training.API.Areas.HelpPage.ModelDescriptions;
 
-namespace TrainingTake2.Areas.HelpPage.Models
+namespace Training.API.Areas.HelpPage.Models
 {
     /// <summary>
     /// The model that represents an API displayed on the help page.

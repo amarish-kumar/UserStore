@@ -1,6 +1,6 @@
 ﻿using System.Web;
 
-namespace TrainingTake2
+namespace Training.API
 {
     public class WebApiApplication : HttpApplication
     {

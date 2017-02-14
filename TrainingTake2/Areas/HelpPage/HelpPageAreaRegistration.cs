@@ -1,7 +1,7 @@
 using System.Web.Http;
 using System.Web.Mvc;
 
-namespace TrainingTake2.Areas.HelpPage
+namespace Training.API.Areas.HelpPage
 {
     public class HelpPageAreaRegistration : AreaRegistration
     {

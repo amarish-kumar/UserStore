@@ -1,10 +1,10 @@
 using System;
 using System.Web.Http;
 using System.Web.Mvc;
-using TrainingTake2.Areas.HelpPage.ModelDescriptions;
-using TrainingTake2.Areas.HelpPage.Models;
+using Training.API.Areas.HelpPage.ModelDescriptions;
+using Training.API.Areas.HelpPage.Models;
 
-namespace TrainingTake2.Areas.HelpPage.Controllers
+namespace Training.API.Areas.HelpPage.Controllers
 {
     /// <summary>
     /// The controller that will handle requests for the help page.

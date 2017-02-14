@@ -1,9 +1,8 @@
 ﻿using System.Linq;
 using System.Web.Http;
-using Training.Identity;
 using Training.Identity.Services;
 
-namespace TrainingTake2.Controllers
+namespace Training.API.Controllers
 {
     public class StartController : ApiController
     {
@@ -22,10 +21,7 @@ namespace TrainingTake2.Controllers
 
         public void Post()
         {
-            _repository.Add(new ApplicationUser
-            {
-                UserName = "andrey"
-            });
+            //todo: add user
         }
     }
 }

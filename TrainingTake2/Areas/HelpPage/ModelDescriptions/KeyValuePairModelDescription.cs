@@ -1,4 +1,4 @@
-namespace TrainingTake2.Areas.HelpPage.ModelDescriptions
+namespace Training.API.Areas.HelpPage.ModelDescriptions
 {
     public class KeyValuePairModelDescription : ModelDescription
     {

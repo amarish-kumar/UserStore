@@ -5,15 +5,15 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Microsoft.Owin;
 using Owin;
+using Training.API.App_Start;
 using Training.Identity;
-using TrainingTake2;
-using TrainingTake2.App_Start;
+using Training.API;
 
 // ReSharper disable once RedundantNameQualifier
 
 [assembly: OwinStartup(typeof(Startup))]
 
-namespace TrainingTake2
+namespace Training.API
 {
     public partial class Startup
     {

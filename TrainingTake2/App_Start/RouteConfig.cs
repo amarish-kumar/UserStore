@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace TrainingTake2
+namespace Training.API
 {
     public class RouteConfig
     {

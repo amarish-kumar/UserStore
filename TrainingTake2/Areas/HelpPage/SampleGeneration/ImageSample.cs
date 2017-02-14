@@ -1,6 +1,6 @@
 using System;
 
-namespace TrainingTake2.Areas.HelpPage
+namespace Training.API.Areas.HelpPage
 {
     /// <summary>
     /// This represents an image sample on the help page. There's a display template named ImageSample associated with this class.

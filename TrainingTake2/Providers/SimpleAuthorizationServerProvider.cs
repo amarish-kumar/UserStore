@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Owin.Security.OAuth;
 using Training.Identity.Services;
 
-namespace TrainingTake2.Providers
+namespace Training.API.Providers
 {
     public class SimpleAuthorizationServerProvider : OAuthAuthorizationServerProvider
     {

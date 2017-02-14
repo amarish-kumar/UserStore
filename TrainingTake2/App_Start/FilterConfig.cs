@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace TrainingTake2
+namespace Training.API
 {
     public class FilterConfig
     {

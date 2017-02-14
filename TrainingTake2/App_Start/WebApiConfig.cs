@@ -1,8 +1,8 @@
 ﻿using System.Web.Http;
 using Microsoft.Practices.Unity.WebApi;
-using TrainingTake2.App_Start;
+using Training.API.App_Start;
 
-namespace TrainingTake2
+namespace Training.API
 {
     public static class WebApiConfig
     {

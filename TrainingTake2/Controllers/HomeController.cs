@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using Training.Identity.Services;
 
-namespace TrainingTake2.Controllers
+namespace Training.API.Controllers
 {
     public class HomeController : Controller
     {
