@@ -13,5 +13,8 @@ namespace Training.Identity.Services
         void Edit(ApplicationUser entity);
 
         void Save();
+        void SetRole(string userId, Roles role);
+
+        bool IsEmailUnique(string email);
     }
 }
