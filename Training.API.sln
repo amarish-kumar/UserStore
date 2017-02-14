@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Training.API", "TrainingTake2\Training.API.csproj", "{3695D428-2685-4034-8951-EA14931519C9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Training.API", "Training.API\Training.API.csproj", "{3695D428-2685-4034-8951-EA14931519C9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Training.Identity", "Training.Identity\Training.Identity.csproj", "{B22C856D-9658-4C68-9AFF-7FC24D646F93}"
 EndProject
