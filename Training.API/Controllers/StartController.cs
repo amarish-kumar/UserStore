@@ -1,19 +1,22 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using System.Web.Http;
-using Training.Identity;
+using Newtonsoft.Json;
 using Training.Identity.Services;
+using Training.Services;
 using TrainingTake2.Models;
+using TrainingTake2.Services;
 
 namespace Training.API.Controllers
 {
     public class StartController : ApiController
     {
+        private readonly IQueueService _queue;
         private readonly IAuthRepository _repository;
 
-        public StartController(IAuthRepository repository)
+        public StartController(IAuthRepository repository, IQueueService queue)
         {
             _repository = repository;
+            _queue = queue;
         }
 
         [Authorize]
@@ -25,7 +28,7 @@ namespace Training.API.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("Create")]
-        public async Task<IHttpActionResult> POSTCreate(UserModel user)
+        public IHttpActionResult POSTCreate(UserModel user)
         {
             if (!ModelState.IsValid)
                 return BadRequest("wrong user details");
@@ -33,25 +36,15 @@ namespace Training.API.Controllers
             if (_repository.IsEmailUnique(user.Email))
                 return BadRequest("email already taken");
 
-
-            var x = _repository.Add(new ApplicationUser
+            var command = new CreateUserCommand
             {
-                UserName = user.UserName,
-                Email = user.Email,
-                PasswordHash = user.Password.GetHashCode().ToString()
-            });
+                FirstName = user.UserName,
+                Surname = user.UserName
+            };
 
-            _repository.Save();
-            _repository.SetRole(x.Id, Roles.user);
-            _repository.Save();
-            return Ok();
-        }
-
-        [HttpGet]
-        [Route("CheckEmail/{email}")]
-        public bool CheckEmail(string email)
-        {
-            return _repository.IsEmailUnique(email);
+            var message = JsonConvert.SerializeObject(command);
+            _queue.SendMessage(message);
+            return Ok("user created");
         }
     }
 }

@@ -3,7 +3,10 @@ using System.Web.Mvc;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 using Microsoft.Practices.Unity.WebApi;
+using Training.DAL.Interfaces.Interfaces;
+using Training.DAL.Services;
 using Training.Identity.Services;
+using TrainingTake2.Services;
 
 namespace Training.API.App_Start
 {
@@ -17,6 +20,8 @@ namespace Training.API.App_Start
             var container = new UnityContainer();
 
             container.RegisterType<IAuthRepository, AuthRepository>();
+            container.RegisterType<IQueueService, QueueService>();
+            container.RegisterType<IUserRepository, UserRepository>();
             return container;
         }
     }
