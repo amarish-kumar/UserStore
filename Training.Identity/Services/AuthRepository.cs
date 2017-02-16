@@ -25,12 +25,14 @@ namespace Training.Identity.Services
 
         public void Delete(ApplicationUser entity)
         {
-            throw new NotImplementedException();
+            _context.Users.Remove(entity);
         }
 
         public void Edit(ApplicationUser entity)
         {
-            throw new NotImplementedException();
+            var userToUpdate = _context.Users.FirstOrDefault(u => u.Id == entity.Id);
+            _context.Users.Remove(userToUpdate);
+            _context.Users.Add(entity);
         }
 
         public void Save()
@@ -42,11 +44,12 @@ namespace Training.Identity.Services
         {
             var user = _context.Users.FirstOrDefault(u => u.Id == userId);
             var roleToSet = _context.Roles.FirstOrDefault(r => r.Name == role.ToString());
-            user.Roles.Add(new IdentityUserRole {RoleId = roleToSet.Id});
+            user?.Roles.Add(new IdentityUserRole {RoleId = roleToSet?.Id});
         }
 
         public bool IsEmailUnique(string email)
         {
+            //todo: use string.compare() instead
             var user = _context.Users.FirstOrDefault(u => u.Email == email);
             return user != null;
         }
