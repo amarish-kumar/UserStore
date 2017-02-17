@@ -10,10 +10,9 @@ namespace Training.DAL.Interfaces.Models
         public string Id { get; set; }
         public string FirstName { get; set; }
         public string Surname { get; set; }
-        public BsonDateTime DoB { get; set; }
+        public DateTime DoB { get; set; }
         public string Email { get; set; }
-        public BsonDateTime CreatedDate { get; set; }
-        public BsonDateTime UpdatedDate { get; set; }
-        public string Password { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime UpdatedDate { get; set; }
     }
 }

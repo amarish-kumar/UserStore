@@ -38,7 +38,7 @@ namespace Training.UserStore
                     Console.WriteLine(" [x] Received {0}", message);
                 };
                 channel.BasicConsume(queueName, true, consumer);
-                
+
                 Console.WriteLine(" Press [enter] to exit.");
                 Console.ReadLine();
             }

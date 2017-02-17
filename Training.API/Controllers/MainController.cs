@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Web.Http;
+using AutoMapper;
 using Newtonsoft.Json;
 using Training.Identity.Services;
 using Training.Services;
@@ -8,18 +9,18 @@ using TrainingTake2.Services;
 
 namespace Training.API.Controllers
 {
-    public class StartController : ApiController
+    public class MainController : ApiController
     {
         private readonly IQueueService _queue;
         private readonly IAuthRepository _repository;
 
-        public StartController(IAuthRepository repository, IQueueService queue)
+        public MainController(IAuthRepository repository, IQueueService queue)
         {
             _repository = repository;
             _queue = queue;
         }
 
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public string Get()
         {
             return _repository.GetAll().Count().ToString();
@@ -28,7 +29,7 @@ namespace Training.API.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("Create")]
-        public IHttpActionResult POSTCreate(UserModel user)
+        public IHttpActionResult POSTCreateUser(UserModel user)
         {
             if (!ModelState.IsValid)
                 return BadRequest("wrong user details");
@@ -36,10 +37,16 @@ namespace Training.API.Controllers
             if (_repository.IsEmailUnique(user.Email))
                 return BadRequest("email already taken");
 
+            //var config = new MapperConfiguration(cfg => { cfg.CreateMap<UserModel, CreateUserCommand>(); });
+
+            //var mapper = config.CreateMapper();
+            //var command = mapper.Map<UserModel, CreateUserCommand>(user);
+
+            //var command = Mapper.Map(user, new CreateUserCommand());
+
             var command = new CreateUserCommand
             {
-                FirstName = user.UserName,
-                Surname = user.UserName
+                FirstName = user.FirstName,
             };
 
             var message = JsonConvert.SerializeObject(command);

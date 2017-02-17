@@ -9,17 +9,10 @@ namespace Training.API
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+            config.DependencyResolver = new UnityDependencyResolver(UnityConfig.RegisterTypes());
 
             // Web API routes
             config.MapHttpAttributeRoutes();
-
-            config.Routes.MapHttpRoute(
-                "DefaultApi",
-                "api/{controller}/{id}",
-                new {id = RouteParameter.Optional}
-            );
-
-            config.DependencyResolver = new UnityDependencyResolver(UnityConfig.RegisterTypes());
         }
     }
 }

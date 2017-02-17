@@ -14,6 +14,11 @@ namespace Training.API
                 "{controller}/{action}/{id}",
                 new {controller = "Home", action = "Index", id = UrlParameter.Optional}
             );
+
+            routes.MapRoute(
+                "HelpPage_Default",
+                "Help/{action}/{apiId}",
+                new {controller = "Help", action = "Index", apiId = UrlParameter.Optional});
         }
     }
 }
