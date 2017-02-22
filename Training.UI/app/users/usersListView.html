@@ -7,7 +7,7 @@
                     <td>First Name</td>
                     <td>Profile Id</td>
                     <td>Email</td>
-                    <td>Data of birth</td>
+                    <td>Date of birth</td>
                 </tr>
             </thead>
             <tbody>
@@ -15,7 +15,7 @@
                     <td>{{user.firstName}}</td>
                     <td>{{user.surname}}</td>
                     <td>{{user.email}}</td>
-                    <td>{{user.dob}}</td>
+                    <td>{{user.dob | date }}</td>
                 </tr>
             </tbody>
         </table>
