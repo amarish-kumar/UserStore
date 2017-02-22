@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Training.Services
 {
@@ -10,5 +6,7 @@ namespace Training.Services
     {
         public string FirstName { get; set; }
         public string Surname { get; set; }
+        public string Email { get; set; }
+        public DateTime DoB { get; set; }
     }
 }

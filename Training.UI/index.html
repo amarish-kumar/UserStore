@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html ng-app="userStore">
+
+<head>
+    <meta charset="utf-8" />
+    <title>User store</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <div class="navbar-brand">User Store</div>
+            </div>
+        </div>
+
+        <!--<div class="container" ng-controller="usersListCtrl">
+            <ui-view></ui-view>
+        </div>-->
+
+        <a ui-sref="usersList" ui-sref-active="active">Show users</a>
+        <a ui-sref="about" ui-sref-active="active">About</a>
+        <ui-view></ui-view>
+
+        <!--Libarary Scripts-->
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular-resource/angular-resource.js"></script>
+        <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+        <!--Application Script-->
+        <script src="app.js"></script>
+
+        <!--Services-->
+        <script src="\app\common\common.services.js"></script>
+        <script src="app\common\userResource.js"></script>
+
+        <!--Controlers-->
+        <script src="app\users\usersListCtrl.js"></script>
+</body>
+
+</html>

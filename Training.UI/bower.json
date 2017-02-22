@@ -1,0 +1,17 @@
+{
+    "name": "bower",
+    "description": "",
+    "main": "index.js",
+    "license": "ISC",
+    "homepage": "https://github.com/sparkybit/Training-Dmitriy-Grek",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "angular": "^1.6.2"
+    }
+}
