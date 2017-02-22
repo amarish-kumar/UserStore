@@ -1,11 +1,16 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Text;
+using AutoMapper;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Training.DAL.Interfaces.Models;
 using Training.DAL.Services;
 using Training.Services;
+
+#endregion
 
 namespace Training.UserStore
 {
@@ -30,18 +35,19 @@ namespace Training.UserStore
                     var message = Encoding.UTF8.GetString(body);
                     //todo: handle different commands
                     var command = JsonConvert.DeserializeObject<CreateUserCommand>(message);
-                    //var config = new MapperConfiguration(cfg => { cfg.CreateMap<CreateUserCommand, User>(); });
-                    //var mapper = config.CreateMapper();
-                    //var command = mapper.Map<UserModel, CreateUserCommand>(user);
+                    var config = new MapperConfiguration(cfg => { cfg.CreateMap<CreateUserCommand, User>(); });
+                    var mapper = config.CreateMapper();
+                    var user = mapper.Map<CreateUserCommand, User>(command);
+                    user.CreatedDate = DateTime.Now;
 
-                    var user = new User
-                    {
-                        FirstName = command.FirstName,
-                        Surname = command.Surname,
-                        DoB = command.DoB,
-                        Email = command.Email,
-                        CreatedDate = DateTime.Now
-                    };
+                    //var user = new User
+                    //{
+                    //    FirstName = command.FirstName,
+                    //    Surname = command.Surname,
+                    //    DoB = command.DoB,
+                    //    Email = command.Email,
+                    //    CreatedDate = DateTime.Now
+                    //};
 
                     await repository.AddAsync(user);
                     Console.WriteLine(" [x] Received {0}", message);
