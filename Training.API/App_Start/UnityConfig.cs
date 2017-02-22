@@ -18,10 +18,10 @@ namespace Training.API.App_Start
         public static UnityContainer RegisterTypes()
         {
             var container = new UnityContainer();
-
+            var context = new UserContext();
             container.RegisterType<IAuthRepository, AuthRepository>();
             container.RegisterType<IQueueService, QueueService>();
-            container.RegisterType<IUserRepository, UserRepository>();
+            container.RegisterInstance<IUserRepository>(new UserRepository(context));
             return container;
         }
     }

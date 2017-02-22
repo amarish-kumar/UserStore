@@ -1,29 +1,36 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using AutoMapper;
 using Newtonsoft.Json;
-using Training.Identity.Services;
+using Training.DAL.Interfaces.Interfaces;
+using Training.DAL.Interfaces.Models;
 using Training.Services;
 using TrainingTake2.Models;
 using TrainingTake2.Services;
 
 namespace Training.API.Controllers
 {
+    [EnableCors("http://localhost:3000", "*", "*")]
     public class MainController : ApiController
     {
         private readonly IQueueService _queue;
-        private readonly IAuthRepository _repository;
+        private readonly IUserRepository _repository;
 
-        public MainController(IAuthRepository repository, IQueueService queue)
+        public MainController(IUserRepository repository, IQueueService queue)
         {
             _repository = repository;
             _queue = queue;
         }
 
-        [Authorize(Roles = "admin")]
-        public string Get()
+        //[Authorize(Roles = "admin")]
+        [HttpGet]
+        [Route("GetUsers")]
+        //[Authorize]
+        public IEnumerable<User> Get()
         {
-            return _repository.GetAll().Count().ToString();
+            //todo: change it to User
+            return _repository.GetAll();
         }
 
         [HttpPost]
@@ -34,20 +41,13 @@ namespace Training.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest("wrong user details");
 
-            if (_repository.IsEmailUnique(user.Email))
-                return BadRequest("email already taken");
+            //if (_repository.IsEmailUnique(user.Email))
+            //    return BadRequest("email already taken");
 
-            //var config = new MapperConfiguration(cfg => { cfg.CreateMap<UserModel, CreateUserCommand>(); });
+            var config = new MapperConfiguration(cfg => { cfg.CreateMap<UserModel, CreateUserCommand>(); });
 
-            //var mapper = config.CreateMapper();
-            //var command = mapper.Map<UserModel, CreateUserCommand>(user);
-
-            //var command = Mapper.Map(user, new CreateUserCommand());
-
-            var command = new CreateUserCommand
-            {
-                FirstName = user.FirstName,
-            };
+            var mapper = config.CreateMapper();
+            var command = mapper.Map<UserModel, CreateUserCommand>(user);
 
             var message = JsonConvert.SerializeObject(command);
             _queue.SendMessage(message);

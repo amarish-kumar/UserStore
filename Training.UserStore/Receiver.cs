@@ -5,6 +5,7 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Training.DAL.Interfaces.Models;
 using Training.DAL.Services;
+using Training.Services;
 
 namespace Training.UserStore
 {
@@ -20,11 +21,7 @@ namespace Training.UserStore
                 var queueName = "hello";
                 var context = new UserContext();
                 var repository = new UserRepository(context);
-                channel.QueueDeclare(queueName,
-                    false,
-                    false,
-                    false,
-                    null);
+                channel.QueueDeclare(queueName, false, false, false, null);
 
                 var consumer = new EventingBasicConsumer(channel);
                 consumer.Received += async (model, ea) =>
@@ -32,9 +29,21 @@ namespace Training.UserStore
                     var body = ea.Body;
                     var message = Encoding.UTF8.GetString(body);
                     //todo: handle different commands
-                    var user = JsonConvert.DeserializeObject<User>(message);
-                    if (user != null)
-                        await repository.AddAsync(user);
+                    var command = JsonConvert.DeserializeObject<CreateUserCommand>(message);
+                    //var config = new MapperConfiguration(cfg => { cfg.CreateMap<CreateUserCommand, User>(); });
+                    //var mapper = config.CreateMapper();
+                    //var command = mapper.Map<UserModel, CreateUserCommand>(user);
+
+                    var user = new User
+                    {
+                        FirstName = command.FirstName,
+                        Surname = command.Surname,
+                        DoB = command.DoB,
+                        Email = command.Email,
+                        CreatedDate = DateTime.Now
+                    };
+
+                    await repository.AddAsync(user);
                     Console.WriteLine(" [x] Received {0}", message);
                 };
                 channel.BasicConsume(queueName, true, consumer);
