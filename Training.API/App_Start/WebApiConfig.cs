@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using Microsoft.Practices.Unity.WebApi;
+using Newtonsoft.Json.Serialization;
 using Training.API.App_Start;
 
 namespace Training.API
@@ -13,6 +14,9 @@ namespace Training.API
 
             // Web API routes
             config.MapHttpAttributeRoutes();
+            config.EnableCors();
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver 
+                = new CamelCasePropertyNamesContractResolver();
         }
     }
 }
