@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web.Http.Cors;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
 using Microsoft.Practices.Unity;
@@ -24,6 +25,7 @@ namespace Training.API
 
             // Token Generation
             app.UseOAuthAuthorizationServer(OAuthServerOptions);
+            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
         }
     }
