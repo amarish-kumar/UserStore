@@ -1,16 +1,6 @@
-var myApp = angular.module('userStore', ['ui.router', 'common.services']);
+var app = angular.module('userStore', ['ui.router', 'common.services']);
 
-myApp.controller('oneController', ['$scope', function($scope) {
-    $scope.greeting = "welcome to angular from controller";
-}]);
-
-myApp.config(function($stateProvider) {
-
-    var aboutState = {
-        name: 'about',
-        url: '/about',
-        template: '<h3>Its the UI-Router hello world app!</h3>'
-    };
+app.config(function($stateProvider) {
 
     var usersListState = {
         name: 'usersList',
@@ -19,6 +9,21 @@ myApp.config(function($stateProvider) {
         templateUrl: 'app/users/usersListView.html'
     };
 
-    $stateProvider.state(aboutState);
+    var loginState = {
+        name: 'login',
+        controller: 'loginCtrl',
+        url: '/login',
+        templateUrl: 'app/login/loginView.html'
+    };
+
+    var registerState = {
+        name: 'register',
+        controller: 'registerCtrl',
+        url: '/register',
+        templateUrl: 'app/registration/registerView.html'
+    };
+
     $stateProvider.state(usersListState);
+    $stateProvider.state(loginState);
+    $stateProvider.state(registerState);
 });

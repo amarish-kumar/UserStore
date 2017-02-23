@@ -1,13 +1,9 @@
 <!doctype html>
-<html lang="en" ng-app>
+<html lang="en" ng-controller="registerCtrl as vm">
 
 <head>
     <meta charset="utf-8">
-    <title>AngularTest</title>
-    <!-- build:js scripts/scripts.js -->
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
-    <!-- endbuild -->
+    <title>Register</title>
 </head>
 
 <body>
@@ -36,7 +32,7 @@
             </div>
             <div class="form-actions">
                 <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Register</button>
-                <a href="login-view.html" class="btn btn-link">Cancel</a>
+                <a href="app\login\loginView.html" class="btn btn-link">Cancel</a>
             </div>
         </form>
     </div>

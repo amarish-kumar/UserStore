@@ -7,36 +7,39 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-default">
+    <!--<nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
                 <div class="navbar-brand">User Store</div>
             </div>
-        </div>
-
-        <!--<div class="container" ng-controller="usersListCtrl">
-            <ui-view></ui-view>
         </div>-->
 
-        <a ui-sref="usersList" ui-sref-active="active">Show users</a>
-        <a ui-sref="about" ui-sref-active="active">About</a>
-        <ui-view></ui-view>
 
-        <!--Libarary Scripts-->
-        <script src="bower_components/angular/angular.js"></script>
-        <script src="bower_components/angular-resource/angular-resource.js"></script>
-        <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-        <!--Application Script-->
-        <script src="app.js"></script>
+    <a ui-sref="login" ui-sref-active="active">Login</a>
+    <a ui-sref="register" ui-sref-active="active">Register</a>
+    <a ui-sref="usersList" ui-sref-active="active">Show users</a>
+    <ui-view></ui-view>
 
-        <!--Services-->
-        <script src="\app\common\common.services.js"></script>
-        <script src="app\common\userResource.js"></script>
+    <!--Libarary Scripts-->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-        <!--Controlers-->
-        <script src="app\users\usersListCtrl.js"></script>
+    <!--Application Script-->
+    <script src="app.js"></script>
+
+    <!--Services-->
+    <script src="app\common\common.services.js"></script>
+    <script src="app\common\userResource.js"></script>
+    <script src="app/common/userAccount.js"></script>
+
+    <!--Controlers-->
+    <script src="app/users/usersListCtrl.js"></script>
+    <script src="app/login/loginCtrl.js"></script>
+    <script src="app/registration/registerCtrl.js"></script>
+
 </body>
 
 </html>
