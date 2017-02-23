@@ -13,6 +13,11 @@ namespace Training.Identity.Services
             _context = context;
         }
 
+        public ApplicationUser GetUserById(string id)
+        {
+            return _context.Users.FirstOrDefault(u => u.Id == id);
+        }
+
         public IQueryable<ApplicationUser> GetAll()
         {
             return _context.Users;
