@@ -1,4 +1,8 @@
-﻿using System;
+﻿#region
+
+using System;
+
+#endregion
 
 namespace TrainingTake2.Models
 {
@@ -8,5 +12,6 @@ namespace TrainingTake2.Models
         public string Surname { get; set; }
         public string Email { get; set; }
         public DateTime DoB { get; set; }
+        public string Password { get; set; }
     }
 }
