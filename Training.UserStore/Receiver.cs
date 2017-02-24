@@ -34,22 +34,25 @@ namespace Training.UserStore
                     var body = ea.Body;
                     var message = Encoding.UTF8.GetString(body);
                     //todo: handle different commands
-                    var command = JsonConvert.DeserializeObject<CreateUserCommand>(message);
-                    var config = new MapperConfiguration(cfg => { cfg.CreateMap<CreateUserCommand, User>(); });
+                    var command = JsonConvert.DeserializeObject<Command>(message);
+                    var config = new MapperConfiguration(cfg => { cfg.CreateMap<Command, User>(); });
                     var mapper = config.CreateMapper();
-                    var user = mapper.Map<CreateUserCommand, User>(command);
-                    user.CreatedDate = DateTime.Now;
+                    var user = mapper.Map<Command, User>(command);
 
-                    //var user = new User
-                    //{
-                    //    FirstName = command.FirstName,
-                    //    Surname = command.Surname,
-                    //    DoB = command.DoB,
-                    //    Email = command.Email,
-                    //    CreatedDate = DateTime.Now
-                    //};
+                    switch (command.Operation)
+                    {
+                        case Operation.Create:
+                            user.CreatedDate = DateTime.Now;
+                            await repository.AddAsync(user);
+                            break;
+                        case Operation.Update:
+                            var userToEdit = repository.FindOneBy(x => x.IdentityId.Equals(user.IdentityId));
+                            user.Id = userToEdit.Id;
+                            user.UpdatedDate = DateTime.Now;
+                            await repository.EditAsync(us => us.IdentityId.Equals(user.IdentityId), user);
+                            break;
+                    }
 
-                    await repository.AddAsync(user);
                     Console.WriteLine(" [x] Received {0}", message);
                 };
                 channel.BasicConsume(queueName, true, consumer);
