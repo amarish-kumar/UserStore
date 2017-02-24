@@ -1,6 +1,10 @@
-﻿using System;
+﻿#region
+
+using System;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+
+#endregion
 
 namespace Training.DAL.Interfaces.Models
 {
@@ -8,6 +12,7 @@ namespace Training.DAL.Interfaces.Models
     {
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
+        public string IdentityId { get; set; }
         public string FirstName { get; set; }
         public string Surname { get; set; }
         public DateTime DoB { get; set; }

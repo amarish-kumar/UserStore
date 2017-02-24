@@ -10,6 +10,7 @@ using Training.Identity.Services;
 using Training.Services;
 using TrainingTake2.Models;
 using TrainingTake2.Services;
+
 namespace Training.API.Controllers
 {
     [EnableCors("http://localhost:3000", "*", "*")]
@@ -28,12 +29,19 @@ namespace Training.API.Controllers
 
         //[Authorize(Roles = "admin")]
         [HttpGet]
-        [Route("GetUsers")]
+        [Route("get")]
         //[Authorize]
         public IEnumerable<User> Get()
         {
-            //todo: change it to User
             return _repository.GetAll();
+        }
+
+        [HttpGet]
+        [Route("get/{id}")]
+        //[Authorize]
+        public User Get(string id)
+        {
+            return _repository.FindOneBy(user => user.IdentityId == id);
         }
 
         [HttpPost]
@@ -41,32 +49,33 @@ namespace Training.API.Controllers
         [Route("Create")]
         public IHttpActionResult POSTCreateUser(UserModel user)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest("wrong user details");
-            //}
-
             if (_authRepository.IsEmailUnique(user.Email))
             {
                 return BadRequest("email already taken");
             }
 
-            CreateIdentity(user);
-            SendCreateUserCommand(user);
-
-            return Ok("user created");
+            var id = CreateIdentity(user);
+            EmitCommand(user, Operation.Create, id);
+            return Ok(id);
         }
 
-        [HttpPost]
-        [Authorize]
-        [Route("GetUserById")]
-        public string GetUserById(string id)
+        [HttpPut]
+        //[Authorize]
+        [Route("Update")]
+        public IHttpActionResult PUTUpdateUser(UserModel user)
         {
-            var user = _authRepository.GetUserById(id);
-            return JsonConvert.SerializeObject(user);
+            _authRepository.Edit(new ApplicationUser
+            {
+                Email = user.Email,
+                UserName = $"{user.FirstName} {user.Surname}",
+                PasswordHash = user.Password,
+                Id = user.IdentityId
+            });
+            EmitCommand(user, Operation.Update);
+            return Ok("user updated");
         }
-        
-        private void CreateIdentity(UserModel user)
+
+        private string CreateIdentity(UserModel user)
         {
             var identity = _authRepository.Add(new ApplicationUser
             {
@@ -77,16 +86,21 @@ namespace Training.API.Controllers
             _authRepository.Save();
             _authRepository.SetRole(identity.Id, Roles.user);
             _authRepository.Save();
+            return identity.Id;
         }
 
-
-        private void SendCreateUserCommand(UserModel user)
+        private void EmitCommand(UserModel user, Operation operation, string identityId = "")
         {
-            var config = new MapperConfiguration(cfg => { cfg.CreateMap<UserModel, CreateUserCommand>(); });
-
+            var config = new MapperConfiguration(cfg => { cfg.CreateMap<UserModel, Command>(); });
             var mapper = config.CreateMapper();
-            var command = mapper.Map<UserModel, CreateUserCommand>(user);
 
+            if (operation == Operation.Create)
+            {
+                user.IdentityId = identityId;
+            }
+
+            var command = mapper.Map<UserModel, Command>(user);
+            command.Operation = operation;
             var message = JsonConvert.SerializeObject(command);
             _queue.SendMessage(message);
         }

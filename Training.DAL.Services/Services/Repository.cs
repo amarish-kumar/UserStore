@@ -30,6 +30,14 @@ namespace Training.DAL.Services.Services
             return list.AsQueryable();
         }
 
+        public T FindOneBy(Expression<Func<T, bool>> predicate)
+        {
+            var list = _collection
+                .Find(Builders<T>.Filter.Where(predicate))
+                .ToList();
+            return list.Count == 0 ? default(T) : list[0];
+        }
+
         public async Task AddAsync(T entity)
         {
             await _collection.InsertOneAsync(entity);

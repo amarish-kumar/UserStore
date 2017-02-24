@@ -23,7 +23,15 @@ app.config(function($stateProvider) {
         templateUrl: 'app/registration/registerView.html'
     };
 
+    var userDetails = {
+        name: 'userDetails',
+        controller: 'userDetailsCtrl',
+        url: '/userDetails',
+        templateUrl: 'app/users/userDetailsView.html'
+    };
+
     $stateProvider.state(usersListState);
     $stateProvider.state(loginState);
     $stateProvider.state(registerState);
+    $stateProvider.state(userDetails);
 });

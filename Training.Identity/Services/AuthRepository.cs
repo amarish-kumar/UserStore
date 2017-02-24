@@ -1,6 +1,10 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Linq;
 using Microsoft.AspNet.Identity.EntityFramework;
+
+#endregion
 
 namespace Training.Identity.Services
 {
@@ -37,7 +41,10 @@ namespace Training.Identity.Services
         {
             var userToUpdate = _context.Users.FirstOrDefault(u => u.Id == entity.Id);
             _context.Users.Remove(userToUpdate);
+            _context.SaveChanges();
+            entity.Id = userToUpdate.Id;
             _context.Users.Add(entity);
+            _context.SaveChanges();
         }
 
         public void Save()
