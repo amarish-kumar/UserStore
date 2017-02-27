@@ -32,7 +32,7 @@
             </div>
             <div class="form-actions">
                 <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Register</button>
-                <a href="app\login\loginView.html" class="btn btn-link">Cancel</a>
+                <a href ng-click="cancel()" class="btn btn-link">Cancel</a>
             </div>
         </form>
     </div>
