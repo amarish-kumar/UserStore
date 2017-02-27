@@ -8,6 +8,11 @@ function registerCtrl() {
 
     vm.register = register;
 
+    $scope.cancel = function() {
+        $window.history.back();
+    };
+
+
     function register() {
         vm.dataLoading = true;
         UserService.Create(vm.user)
