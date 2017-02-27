@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Web.Http.Cors;
 using Microsoft.Owin;
+using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.OAuth;
 using Microsoft.Practices.Unity;
 using Owin;
@@ -23,9 +23,10 @@ namespace Training.API
                 Provider = new SimpleAuthorizationServerProvider(repository)
             };
 
+
             // Token Generation
             app.UseOAuthAuthorizationServer(OAuthServerOptions);
-            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+            app.UseCors(CorsOptions.AllowAll);
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
         }
     }

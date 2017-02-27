@@ -1,10 +1,6 @@
-﻿#region
-
-using System;
+﻿using System;
 using System.Linq;
 using Microsoft.AspNet.Identity.EntityFramework;
-
-#endregion
 
 namespace Training.Identity.Services
 {
@@ -61,7 +57,6 @@ namespace Training.Identity.Services
 
         public bool IsEmailUnique(string email)
         {
-            //todo: use string.compare() instead
             var user = _context.Users.FirstOrDefault(u => u.Email == email);
             return user != null;
         }
