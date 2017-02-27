@@ -1,6 +1,6 @@
 app.controller('usersListCtrl', ['userResource', function(userResource) {
     var vm = this;
-    userResource.query(function(data) {
+    userResource.getUsers.getUsers(function(data) {
         vm.users = data;
     });
 }]);
