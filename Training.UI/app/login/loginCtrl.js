@@ -1,8 +1,12 @@
-app.controller('loginCtrl', ['$scope', '$location', 'userAccount', loginCtrl]);
+app.controller('loginCtrl', ['$scope', '$location', 'userAccount', 'currentUser',
+    loginCtrl
+]);
 
-function loginCtrl($scope, $location, userAccount) {
+function loginCtrl($scope, $location, userAccount, currentUser) {
     $scope.message = "errors will be shown here";
-    $scope.isLoggedId = false;
+    $scope.isLoggedId = function() {
+        return currentUser.getProfile().isLoggedId;
+    };
     $scope.userData = {
         userName: '',
         email: '',
@@ -14,18 +18,18 @@ function loginCtrl($scope, $location, userAccount) {
         // $scope.userData.userName = $scope.userData.email;
         $scope.userData.userName = $scope.username;
         $scope.userData.password = $scope.password;
-
         userAccount.login.loginUser($scope.userData,
             function(data) {
-                $scope.isLoggedId = true;
-                $scope.token = data.access_token;
+                $scope.password = "";
+                $scope.message = "";
+                currentUser.setProfile($scope.userData.username, data.access_token, data.id);
+                $location.path('/userDetails');
             },
             function(response) {
                 $scope.password = "";
-                $scope.isLoggedId = true;
                 $scope.message = response.statusText + "\r\n";
                 if (response.data.exceptionMessage)
-                    $scope.message += response.data.exceptionMessage;
+                    $scope.message += data.error_description;
 
                 if (response.data.modelState)
                     for (var key in response.data.modelState) {
@@ -33,9 +37,9 @@ function loginCtrl($scope, $location, userAccount) {
                     }
             });
 
-        if ($scope.isLoggedId) {
-            $location.path('/register');
-        }
+        // if ($scope.isLoggedId) {
+        //     $location.path('/userDetails');
+        // }
     };
 
     $scope.register = function() {
