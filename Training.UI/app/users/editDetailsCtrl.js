@@ -9,7 +9,8 @@ function editDetailsCtrl($scope, $window, userResource, currentUser) {
         });
 
     $scope.update = function() {
-        userResource.$update({ id: $scope.user.Id },
+
+        userResource.updateUser.updateUser({}, $scope.user,
             function(data) {
                 $scope.message = "... update successfull";
             });

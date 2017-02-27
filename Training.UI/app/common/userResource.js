@@ -34,7 +34,7 @@
             }),
             updateUser: $resource(appSettings.serverPath + '/update', null, {
                 'updateUser': {
-                    method: 'POST',
+                    method: 'PUT',
                     headers: {
                         'Authorization': 'Bearer' + currentUser.getProfile().token,
                     }
