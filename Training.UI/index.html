@@ -18,6 +18,7 @@
 
     <a ui-sref="login" ui-sref-active="active">Login</a>
     <a ui-sref="register" ui-sref-active="active">Register</a>
+    <a ui-sref="userDetails" ui-sref-active="active">User Details</a>
     <a ui-sref="usersList" ui-sref-active="active">Show users</a>
     <ui-view></ui-view>
 
@@ -31,14 +32,17 @@
     <script src="app.js"></script>
 
     <!--Services-->
-    <script src="app\common\common.services.js"></script>
-    <script src="app\common\userResource.js"></script>
+    <script src="app/common/common.services.js"></script>
+    <script src="app/common/userResource.js"></script>
     <script src="app/common/userAccount.js"></script>
+    <script src="app/common/currentUser.js"></script>
 
     <!--Controlers-->
     <script src="app/users/usersListCtrl.js"></script>
     <script src="app/login/loginCtrl.js"></script>
     <script src="app/registration/registerCtrl.js"></script>
+    <script src="app/users/userDetailsCtrl.js"></script>
+    <script src="app/users/editDetailsCtrl.js"></script>
 
 </body>
 

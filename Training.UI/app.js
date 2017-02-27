@@ -30,8 +30,16 @@ app.config(function($stateProvider) {
         templateUrl: 'app/users/userDetailsView.html'
     };
 
+    var editDetails = {
+        name: 'editDetails',
+        controller: 'editDetailsCtrl',
+        url: '/editDetails',
+        templateUrl: 'app/users/editDetailsView.html'
+    };
+
     $stateProvider.state(usersListState);
     $stateProvider.state(loginState);
     $stateProvider.state(registerState);
     $stateProvider.state(userDetails);
+    $stateProvider.state(editDetails);
 });
