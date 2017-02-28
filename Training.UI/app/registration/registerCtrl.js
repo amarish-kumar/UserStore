@@ -1,29 +1,28 @@
-app.controller('registerCtrl', registerCtrl);
+app.controller('registerCtrl', ['$scope', '$window', 'userAccount', registerCtrl]);
 
-// RegisterController.$inject = ['UserService', '$location', '$rootScope', 'FlashService'];
+function registerCtrl($scope, $window, userAccount) {
+    $scope.message = "";
+    $scope.user = {};
+    $scope.user.firstName = "11";
+    $scope.user.surname = "q";
+    $scope.user.email = "11@11.com";
+    $scope.user.dob = "27/02/2017";
+    $scope.user.password = "11";
 
-// function RegisterController(UserService, $location, $rootScope, FlashService) {
-function registerCtrl() {
-    var vm = this;
+    $scope.register = function() {
+        userAccount.registration.registerUser({}, $scope.user,
+            function(data) {
+                // $scope.message = "... user registered";
+                alert("user registered");
+                $location.path('/userDetails');
 
-    vm.register = register;
+            },
+            function(data) {
+                $scope.message = data;
+            });
+    };
 
     $scope.cancel = function() {
         $window.history.back();
     };
-
-
-    function register() {
-        vm.dataLoading = true;
-        UserService.Create(vm.user)
-            .then(function(response) {
-                if (response.success) {
-                    FlashService.Success('Registration successful', true);
-                    $location.path('/login');
-                } else {
-                    FlashService.Error(response.message);
-                    vm.dataLoading = false;
-                }
-            });
-    }
 }
