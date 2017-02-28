@@ -1,4 +1,4 @@
-var app = angular.module('userStore', ['ui.router', 'common.services']);
+var app = angular.module('userStore', ['ui.router', 'ngCookies', 'common.services']);
 
 app.config(function($stateProvider) {
 
