@@ -1,7 +1,10 @@
-app.controller('userDetailsCtrl', ['$scope', '$window', '$location', 'userResource', 'currentUser', userDetailsCtrl]);
+app.controller('userDetailsCtrl', ['$scope', '$window', '$location', '$cookies', 'userResource', 'currentUser', userDetailsCtrl]);
 
-function userDetailsCtrl($scope, $window, $location, userResource, currentUser) {
+function userDetailsCtrl($scope, $window, $location, $cookies, userResource, currentUser) {
     $scope.user = {};
+    $scope.isAdmin = function() {
+        return Boolean(parseInt(currentUser.getProfile().role));
+    };
 
     userResource.getUser.getUser({ id: currentUser.getProfile().id },
         function(data) {
@@ -12,7 +15,12 @@ function userDetailsCtrl($scope, $window, $location, userResource, currentUser) 
         $location.path('/editDetails');
     };
 
-    $scope.cancel = function() {
-        $window.history.back();
+    $scope.logout = function() {
+        currentUser.setProfile("", "", "", "");
+        $location.path('/login');
+    };
+
+    $scope.showUsers = function() {
+        $location.path('/users');
     };
 }

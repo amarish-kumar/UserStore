@@ -33,9 +33,11 @@
             <label>{{user.updatedDate | date}}</label>
         </div>
         <button ng-click="edit()">Edit</button>
-        <a href ng-click="cancel()" class="btn btn-link">Cancel</a>
-        <label>{{message}}</label>
-    </div>
+        <a href ng-click="logout()" class="btn btn-link">Logout</a>
+        <div>
+            <button ng-click="showUsers()" ng-show="isAdmin()">Show users</button>
+            <label>{{message}}</label>
+        </div>
 </body>
 
 </html>
