@@ -21,24 +21,13 @@ function loginCtrl($scope, $location, userAccount, currentUser) {
             function(data) {
                 $scope.password = "";
                 $scope.message = "";
-                currentUser.setProfile($scope.userData.username, data.access_token, data.id);
+                currentUser.setProfile($scope.userData.username, data.access_token, data.id, data.role);
                 $location.path('/userDetails');
             },
             function(response) {
                 $scope.password = "";
-                $scope.message = response.statusText + "\r\n";
-                if (response.data.exceptionMessage)
-                    $scope.message += data.error_description;
-
-                if (response.data.modelState)
-                    for (var key in response.data.modelState) {
-                        $scope.message += response.data.modelState[key] + "\r\n";
-                    }
+                $scope.message = response;
             });
-
-        // if ($scope.isLoggedId) {
-        //     $location.path('/userDetails');
-        // }
     };
 
     $scope.register = function() {
