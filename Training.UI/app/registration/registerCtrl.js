@@ -1,21 +1,19 @@
-app.controller('registerCtrl', ['$scope', '$window', 'userAccount', registerCtrl]);
+app.controller('registerCtrl', ['$scope', '$window', '$location', 'userAccount', registerCtrl]);
 
-function registerCtrl($scope, $window, userAccount) {
+function registerCtrl($scope, $window, $location, userAccount) {
     $scope.message = "";
     $scope.user = {};
-    $scope.user.firstName = "11";
-    $scope.user.surname = "q";
-    $scope.user.email = "11@11.com";
-    $scope.user.dob = "27/02/2017";
-    $scope.user.password = "11";
+    $scope.user.firstName = "15";
+    $scope.user.surname = "w";
+    $scope.user.email = "15@15.com";
+    $scope.user.dob = "01/20/2017";
+    $scope.user.password = "15";
 
     $scope.register = function() {
         userAccount.registration.registerUser({}, $scope.user,
             function(data) {
-                // $scope.message = "... user registered";
-                alert("user registered");
-                $location.path('/userDetails');
-
+                $scope.message = "... user registered";
+                $location.path('/login');
             },
             function(data) {
                 $scope.message = data;
@@ -23,6 +21,6 @@ function registerCtrl($scope, $window, userAccount) {
     };
 
     $scope.cancel = function() {
-        $window.history.back();
+        $location.path('/login');
     };
 }
