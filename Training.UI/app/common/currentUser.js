@@ -2,9 +2,9 @@
     "use strict";
 
     angular.module('common.services')
-        .factory('currentUser', currentUser);
+        .factory('currentUser', ['$cookies', currentUser]);
 
-    function currentUser() {
+    function currentUser($cookies) {
         var profile = {
             username: "",
             token: "",
@@ -17,6 +17,7 @@
             profile.token = token;
             profile.isLoggedIn = true;
             profile.id = id;
+            $cookies.put('token', token);
         };
 
         var getProfile = function() {

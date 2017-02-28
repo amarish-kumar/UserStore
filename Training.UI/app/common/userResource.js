@@ -2,16 +2,16 @@
     "use strict";
 
     angular.module('common.services')
-        .factory('userResource', ['$resource', 'appSettings', 'currentUser', userResource]);
+        .factory('userResource', ['$resource', '$cookies', 'appSettings', 'currentUser', userResource]);
 
-    function userResource($resource, appSettings, currentUser) {
+    function userResource($resource, $cookies, appSettings, currentUser) {
         return {
             getUser: $resource(appSettings.serverPath + 'get/:id', null, {
                 'getUser': {
                     method: 'GET',
                     isArray: false,
                     headers: {
-                        'Authorization': 'Bearer' + currentUser.getProfile().token,
+                        'Authorization': 'Bearer ' + currentUser.getProfile().token,
                     }
                 }
             }),
@@ -20,7 +20,7 @@
                     method: 'GET',
                     isArray: true,
                     headers: {
-                        'Authorization': 'Bearer' + currentUser.getProfile().token,
+                        'Authorization': 'Bearer ' + $cookies.get('token'),
                     }
                 }
             }),
@@ -28,7 +28,7 @@
                 'addUser': {
                     method: 'POST',
                     headers: {
-                        'Authorization': 'Bearer' + currentUser.getProfile().token,
+                        'Authorization': 'Bearer ' + currentUser.getProfile().token,
                     }
                 }
             }),
@@ -36,7 +36,7 @@
                 'updateUser': {
                     method: 'PUT',
                     headers: {
-                        'Authorization': 'Bearer' + currentUser.getProfile().token,
+                        'Authorization': 'Bearer ' + currentUser.getProfile().token,
                     }
                 }
             }),
