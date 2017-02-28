@@ -27,10 +27,9 @@ namespace Training.API.Controllers
             _authRepository = authRepository;
         }
 
-        //[Authorize(Roles = "admin")]
         [HttpGet]
         [Route("get")]
-        //[Authorize]
+        [Authorize]
         public IEnumerable<User> Get()
         {
             return _repository.GetAll();
@@ -38,7 +37,7 @@ namespace Training.API.Controllers
 
         [HttpGet]
         [Route("get/{id}")]
-        //[Authorize]
+        [Authorize]
         public User Get(string id)
         {
             return _repository.FindOneBy(user => user.IdentityId == id);
@@ -60,7 +59,7 @@ namespace Training.API.Controllers
         }
 
         [HttpPut]
-        //[Authorize]
+        [Authorize]
         [Route("Update")]
         public IHttpActionResult PUTUpdateUser(UserModel user)
         {
