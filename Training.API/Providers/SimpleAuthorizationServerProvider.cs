@@ -35,10 +35,16 @@ namespace Training.API.Providers
                 return;
             }
 
+            var userRole = "0";
+            if (user.Roles.Count != 0)
+            {
+                userRole = user.Roles.ToList()[0].RoleId;
+            }
+
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
             identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
-            identity.AddClaim(new Claim(ClaimTypes.Role, "user"));
+            identity.AddClaim(new Claim(ClaimTypes.Role, userRole));
 
             var dict = new Dictionary<string, string>
             {
@@ -47,8 +53,12 @@ namespace Training.API.Providers
                 },
                 {
                     "id", user.Id
+                },
+                {
+                    "role", userRole
                 }
             };
+
 
             var prop = new AuthenticationProperties(dict);
 
