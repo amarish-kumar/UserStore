@@ -14,8 +14,7 @@ namespace Training.API
 
             // Web API routes
             config.MapHttpAttributeRoutes();
-            config.EnableCors();
-            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver 
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver
                 = new CamelCasePropertyNamesContractResolver();
         }
     }

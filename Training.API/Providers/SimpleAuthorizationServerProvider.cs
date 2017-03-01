@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
+using Training.Identity;
 using Training.Identity.Services;
 
 namespace Training.API.Providers
@@ -32,17 +32,14 @@ namespace Training.API.Providers
                 return;
             }
 
-            var userRole = "0";
-            if (user.Roles.Count != 0)
-            {
-                userRole = user.Roles.ToList()[0].RoleId;
-            }
+            var identity = GetIdentity(context, user);
+            var ticket = GetTicket(context, user, identity);
+            context.Validated(ticket);
+        }
 
-            var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-            identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
-            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
-            identity.AddClaim(new Claim(ClaimTypes.Role, userRole));
-
+        private AuthenticationTicket GetTicket(OAuthGrantResourceOwnerCredentialsContext context, ApplicationUser user,
+            ClaimsIdentity identity)
+        {
             var dict = new Dictionary<string, string>
             {
                 {
@@ -50,18 +47,30 @@ namespace Training.API.Providers
                 },
                 {
                     "id", user.Id
-                },
-                {
-                    "role", userRole
                 }
             };
 
+            foreach (var role in _repository.GetUserRoles(user.Id))
+            {
+                dict.Add("role", role);
+            }
 
             var prop = new AuthenticationProperties(dict);
 
-            var ticket = new AuthenticationTicket(identity, prop);
+            return new AuthenticationTicket(identity, prop);
+        }
 
-            context.Validated(ticket);
+        private ClaimsIdentity GetIdentity(OAuthGrantResourceOwnerCredentialsContext context, ApplicationUser user)
+        {
+            var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+            identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
+            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
+
+            foreach (var role in _repository.GetUserRoles(user.Id))
+            {
+                identity.AddClaim(new Claim(ClaimTypes.Role, role));
+            }
+            return identity;
         }
 
         public override async Task TokenEndpoint(OAuthTokenEndpointContext context)

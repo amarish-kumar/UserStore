@@ -3,7 +3,10 @@ app.controller('userDetailsCtrl', ['$scope', '$window', '$location', '$cookies',
 function userDetailsCtrl($scope, $window, $location, $cookies, userResource, currentUser) {
     $scope.user = {};
     $scope.isAdmin = function() {
-        return Boolean(parseInt(currentUser.getProfile().role));
+        if (currentUser.getProfile().role == "admin")
+            return true;
+        else
+            return false;
     };
 
     userResource.getUser.getUser({ id: currentUser.getProfile().id },

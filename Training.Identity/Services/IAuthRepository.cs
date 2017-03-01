@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNet.Identity;
+using Training.Identity.Domain;
 
 namespace Training.Identity.Services
 {
@@ -14,5 +16,6 @@ namespace Training.Identity.Services
         void SetRole(string userId, Roles role);
         bool IsEmailUnique(string email);
         ApplicationUser FindUser(string userName, string password);
+        IList<string> GetUserRoles(string userId);
     }
 }

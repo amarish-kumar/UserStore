@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="Domain\ApplicationUser.cs" />
     <Compile Include="Domain\IdentityContext.cs" />
+    <Compile Include="Domain\Roles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AuthRepository.cs" />
     <Compile Include="Services\IAuthRepository.cs" />

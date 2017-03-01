@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Training.Identity.Domain;
 
 namespace Training.Identity.Services
 {
@@ -43,14 +45,8 @@ namespace Training.Identity.Services
 
         public IdentityResult Update(ApplicationUser entity)
         {
-            return _manager.Update(entity);
-        }
-
-        public void SetRole(string userId, Roles role)
-        {
-            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
-            var roleToSet = _context.Roles.FirstOrDefault(r => r.Name == role.ToString());
-            user?.Roles.Add(new IdentityUserRole {RoleId = roleToSet?.Id});
+            var x = _manager.Update(entity);
+            return x;
         }
 
         public bool IsEmailUnique(string email)
@@ -64,20 +60,19 @@ namespace Training.Identity.Services
             return _manager.Find(userName, password);
         }
 
+        public void SetRole(string userId, Roles role)
+        {
+            _manager.AddToRole(userId, role.ToString());
+        }
+
+        public IList<string> GetUserRoles(string userId)
+        {
+            return _manager.GetRoles(userId);
+        }
+
         public void Dispose()
         {
             _context?.Dispose();
         }
-
-        private void Save()
-        {
-            _context.SaveChanges();
-        }
-    }
-
-    public enum Roles
-    {
-        user,
-        admin
     }
 }

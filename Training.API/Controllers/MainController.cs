@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-using System.Web.Http.Cors;
 using AutoMapper;
 using Newtonsoft.Json;
 using Training.DAL.Interfaces.Interfaces;
 using Training.DAL.Interfaces.Models;
 using Training.Identity;
+using Training.Identity.Domain;
 using Training.Identity.Services;
 using Training.Services;
 using TrainingTake2.Models;
@@ -14,7 +14,6 @@ using TrainingTake2.Services;
 
 namespace Training.API.Controllers
 {
-    [EnableCors("http://localhost:3000", "*", "*")]
     public class MainController : ApiController
     {
         private readonly IAuthRepository _authRepository;
@@ -30,7 +29,7 @@ namespace Training.API.Controllers
 
         [HttpGet]
         [Route("get")]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public IEnumerable<User> Get()
         {
             return _repository.GetAll();
@@ -73,14 +72,14 @@ namespace Training.API.Controllers
         [Route("Update")]
         public IHttpActionResult PUTUpdateUser(UserModel user)
         {
-            var res = _authRepository.Update(new ApplicationUser
-            {
-                Email = user.Email,
-                UserName = user.Email,
-                Id = user.IdentityId
-            });
+            //var res = _authRepository.Update(new ApplicationUser
+            //{
+            //    Email = user.Email,
+            //    UserName = user.Email,
+            //    Id = user.IdentityId
+            //});
 
-            if (!res.Succeeded) return BadRequest(res.Errors.ToList()[0]);
+            //if (!res.Succeeded) return BadRequest(res.Errors.ToList()[0]);
 
             EmitCommand(user, Operation.Update);
             return Ok("user updated");

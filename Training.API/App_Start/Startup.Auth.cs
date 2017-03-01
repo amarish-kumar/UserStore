@@ -14,6 +14,8 @@ namespace Training.API
     {
         public void ConfigureOAuth(IAppBuilder app)
         {
+            app.UseCors(CorsOptions.AllowAll);
+
             var repository = UnityConfig.RegisterTypes().Resolve<IAuthRepository>();
             var OAuthServerOptions = new OAuthAuthorizationServerOptions
             {
@@ -23,10 +25,8 @@ namespace Training.API
                 Provider = new SimpleAuthorizationServerProvider(repository)
             };
 
-
             // Token Generation
             app.UseOAuthAuthorizationServer(OAuthServerOptions);
-            app.UseCors(CorsOptions.AllowAll);
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
         }
     }

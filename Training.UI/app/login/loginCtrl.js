@@ -12,6 +12,7 @@ function loginCtrl($scope, $location, userAccount, currentUser) {
         email: '',
         password: ''
     };
+    currentUser.setProfile('', '', '', '');
 
     $scope.login = function() {
         $scope.userData.grant_type = "password";
