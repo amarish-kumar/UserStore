@@ -27,7 +27,7 @@ namespace Training.API.Providers
             //todo: move to web.config or startupAuth
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] {"*"});
 
-            var user = _repository.GetAll().FirstOrDefault(x => x.UserName == context.UserName);
+            var user = _repository.FindUser(context.UserName, context.Password);
 
             if (user == null)
             {
