@@ -6,7 +6,7 @@
 </head>
 
 <body>
-    <div class="col-md-6 col-md-offset-3">
+    <div>
         <h2>Edit user details</h2>
         <div>
             <label>First name:</label>
@@ -25,7 +25,7 @@
             <input ng-model="user.email" />
         </div>
         <button ng-click="update()">Update</button>
-        <a href ng-click="cancel()" class="btn btn-link">Cancel</a>
+        <a href ng-click="cancel()">Cancel</a>
 
     </div>
     <label>{{message}}</label>
