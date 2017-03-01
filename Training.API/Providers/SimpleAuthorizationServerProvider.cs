@@ -24,9 +24,6 @@ namespace Training.API.Providers
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            //todo: move to web.config or startupAuth
-            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] {"*"});
-
             var user = _repository.FindUser(context.UserName, context.Password);
 
             if (user == null)
