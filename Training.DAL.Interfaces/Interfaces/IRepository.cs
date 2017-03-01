@@ -12,7 +12,7 @@ namespace Training.DAL.Interfaces.Interfaces
     public interface IRepository<T> where T : class
     {
         IQueryable<T> GetAll();
-        Task<IQueryable<T>> FindByAsync(Expression<Func<T, bool>> predicate);
+        IQueryable<T> FindBy(Expression<Func<T, bool>> predicate);
         T FindOneBy(Expression<Func<T, bool>> predicate);
         Task AddAsync(T entity);
         Task DeleteAsync(Expression<Func<T, bool>> predicate);

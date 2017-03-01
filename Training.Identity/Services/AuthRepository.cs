@@ -77,7 +77,7 @@ namespace Training.Identity.Services
 
     public enum Roles
     {
-        user = 0,
-        admin = 1
+        user,
+        admin
     }
 }
