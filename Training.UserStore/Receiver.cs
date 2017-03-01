@@ -57,7 +57,7 @@ namespace Training.UserStore
                     var userToEdit = repository.FindOneBy(x => x.IdentityId.Equals(user.IdentityId));
                     user.Id = userToEdit.Id;
                     user.UpdatedDate = DateTime.Now;
-                    await repository.EditAsync(us => us.IdentityId.Equals(user.IdentityId), user);
+                    await repository.UpdateAsync(us => us.IdentityId.Equals(user.IdentityId), user);
                     break;
             }
         }
