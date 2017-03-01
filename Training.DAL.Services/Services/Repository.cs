@@ -23,11 +23,12 @@ namespace Training.DAL.Services.Services
 
         public async Task<IQueryable<T>> FindByAsync(Expression<Func<T, bool>> predicate)
         {
-            var list = await _collection
-                .Find(Builders<T>.Filter.Where(predicate))
-                .ToListAsync();
+            return _collection.AsQueryable().Where(predicate);
+            //var list = await _collection
+            //    .Find(Builders<T>.Filter.Where(predicate))
+            //    .ToListAsync();
 
-            return list.AsQueryable();
+            //return list.AsQueryable();
         }
 
         public T FindOneBy(Expression<Func<T, bool>> predicate)
@@ -48,7 +49,7 @@ namespace Training.DAL.Services.Services
             await _collection.DeleteOneAsync(predicate);
         }
 
-        public async Task EditAsync(Expression<Func<T, bool>> predicate, T entity)
+        public async Task UpdateAsync(Expression<Func<T, bool>> predicate, T entity)
         {
             await _collection.ReplaceOneAsync(predicate, entity);
         }

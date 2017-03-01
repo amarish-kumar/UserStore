@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using AutoMapper;
@@ -40,7 +41,7 @@ namespace Training.API.Controllers
         [Authorize]
         public User Get(string id)
         {
-            return _repository.FindOneBy(user => user.IdentityId == id);
+            return _repository.FindOneBy(user => user.IdentityId.Equals(id));
         }
 
         [HttpPost]
@@ -53,9 +54,18 @@ namespace Training.API.Controllers
                 return BadRequest("email already taken");
             }
 
-            var id = CreateIdentity(user);
-            EmitCommand(user, Operation.Create, id);
-            return Ok(id);
+            var appUser = new ApplicationUser
+            {
+                Email = user.Email,
+                UserName = user.Email
+            };
+            var res = _authRepository.Add(appUser, user.Password);
+            if (!res.Succeeded) return BadRequest(res.Errors.ToList()[0]);
+
+            var identity = _authRepository.FindUser(user.Email, user.Password);
+            _authRepository.SetRole(identity.Id, Roles.user);
+            EmitCommand(user, Operation.Create, identity.Id);
+            return Ok(identity.Id);
         }
 
         [HttpPut]
@@ -63,29 +73,17 @@ namespace Training.API.Controllers
         [Route("Update")]
         public IHttpActionResult PUTUpdateUser(UserModel user)
         {
-            _authRepository.Edit(new ApplicationUser
+            var res = _authRepository.Update(new ApplicationUser
             {
                 Email = user.Email,
-                UserName = $"{user.FirstName} {user.Surname}",
-                PasswordHash = user.Password,
+                UserName = user.Email,
                 Id = user.IdentityId
             });
+
+            if (!res.Succeeded) return BadRequest(res.Errors.ToList()[0]);
+
             EmitCommand(user, Operation.Update);
             return Ok("user updated");
-        }
-
-        private string CreateIdentity(UserModel user)
-        {
-            var identity = _authRepository.Add(new ApplicationUser
-            {
-                Email = user.Email,
-                UserName = $"{user.FirstName} {user.Surname}",
-                PasswordHash = user.Password
-            });
-            _authRepository.Save();
-            _authRepository.SetRole(identity.Id, Roles.user);
-            _authRepository.Save();
-            return identity.Id;
         }
 
         private void EmitCommand(UserModel user, Operation operation, string identityId = "")

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Training.Identity.Services
@@ -7,10 +8,12 @@ namespace Training.Identity.Services
     public class AuthRepository : IAuthRepository, IDisposable
     {
         private readonly IdentityContext _context;
+        private readonly UserManager<ApplicationUser> _manager;
 
         public AuthRepository(IdentityContext context)
         {
             _context = context;
+            _manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
         }
 
         public ApplicationUser GetUserById(string id)
@@ -28,24 +31,19 @@ namespace Training.Identity.Services
             return _context.Users.Add(entity);
         }
 
+        public IdentityResult Add(ApplicationUser user, string password)
+        {
+            return _manager.Create(user, password);
+        }
+
         public void Delete(ApplicationUser entity)
         {
             _context.Users.Remove(entity);
         }
 
-        public void Edit(ApplicationUser entity)
+        public IdentityResult Update(ApplicationUser entity)
         {
-            var userToUpdate = _context.Users.FirstOrDefault(u => u.Id == entity.Id);
-            _context.Users.Remove(userToUpdate);
-            _context.SaveChanges();
-            entity.Id = userToUpdate.Id;
-            _context.Users.Add(entity);
-            _context.SaveChanges();
-        }
-
-        public void Save()
-        {
-            _context.SaveChanges();
+            return _manager.Update(entity);
         }
 
         public void SetRole(string userId, Roles role)
@@ -61,9 +59,19 @@ namespace Training.Identity.Services
             return user != null;
         }
 
+        public ApplicationUser FindUser(string userName, string password)
+        {
+            return _manager.Find(userName, password);
+        }
+
         public void Dispose()
         {
             _context?.Dispose();
+        }
+
+        private void Save()
+        {
+            _context.SaveChanges();
         }
     }
 

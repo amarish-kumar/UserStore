@@ -16,6 +16,6 @@ namespace Training.DAL.Interfaces.Interfaces
         T FindOneBy(Expression<Func<T, bool>> predicate);
         Task AddAsync(T entity);
         Task DeleteAsync(Expression<Func<T, bool>> predicate);
-        Task EditAsync(Expression<Func<T, bool>> predicate, T entity);
+        Task UpdateAsync(Expression<Func<T, bool>> predicate, T entity);
     }
 }
