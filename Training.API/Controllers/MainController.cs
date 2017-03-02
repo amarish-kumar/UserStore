@@ -14,6 +14,7 @@ using TrainingTake2.Services;
 
 namespace Training.API.Controllers
 {
+    [RoutePrefix("api/v1")]
     public class MainController : ApiController
     {
         private readonly IAuthRepository _authRepository;
@@ -59,7 +60,10 @@ namespace Training.API.Controllers
                 UserName = user.Email
             };
             var res = _authRepository.Add(appUser, user.Password);
-            if (!res.Succeeded) return BadRequest(res.Errors.ToList()[0]);
+            if (!res.Succeeded)
+            {
+                return BadRequest(res.Errors.ToList()[0]);
+            }
 
             var identity = _authRepository.FindUser(user.Email, user.Password);
             _authRepository.SetRole(identity.Id, Roles.user);
@@ -72,15 +76,6 @@ namespace Training.API.Controllers
         [Route("Update")]
         public IHttpActionResult PUTUpdateUser(UserModel user)
         {
-            //var res = _authRepository.Update(new ApplicationUser
-            //{
-            //    Email = user.Email,
-            //    UserName = user.Email,
-            //    Id = user.IdentityId
-            //});
-
-            //if (!res.Succeeded) return BadRequest(res.Errors.ToList()[0]);
-
             EmitCommand(user, Operation.Update);
             return Ok("user updated");
         }

@@ -6,7 +6,7 @@
 
     function userAccount($resource, appSettings) {
         return {
-            registration: $resource(appSettings.serverPath + "/create", null, {
+            registration: $resource(appSettings.serverPath + "api/v1/create", null, {
                 'registerUser': { method: 'POST' }
             }),
             login: $resource(appSettings.serverPath + "/token", null, {
