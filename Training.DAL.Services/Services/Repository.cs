@@ -11,9 +11,9 @@ namespace Training.DAL.Services.Services
     {
         private readonly IMongoCollection<T> _collection;
 
-        public Repository(Context<T> context, string collectionName)
+        public Repository(Context context, string collectionName)
         {
-            _collection = context.GetCollection(collectionName);
+            _collection = context.Database.GetCollection<T>(collectionName);
         }
 
         public IQueryable<T> GetAll()

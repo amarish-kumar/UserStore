@@ -6,7 +6,7 @@ namespace Training.DAL.Services
 {
     public class UserRepository : Repository<User>, IUserRepository
     {
-        public UserRepository(Context<User> context) : base(context, "users")
+        public UserRepository(Context context) : base(context, "users")
         {
         }
     }
