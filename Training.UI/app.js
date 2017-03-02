@@ -1,6 +1,6 @@
 var app = angular.module('userStore', ['ui.router', 'ngCookies', 'common.services']);
 
-app.config(function($stateProvider) {
+app.config(function($stateProvider, $httpProvider) {
 
     var usersListState = {
         name: 'usersList',
@@ -42,4 +42,6 @@ app.config(function($stateProvider) {
     $stateProvider.state(registerState);
     $stateProvider.state(userDetails);
     $stateProvider.state(editDetails);
+
+    $httpProvider.interceptors.push('recourceInterceptor');
 });
